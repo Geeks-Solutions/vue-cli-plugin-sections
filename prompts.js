@@ -1,11 +1,6 @@
+console.log("In order to setup section you need to get your projectId and projectUrl by registering an account on https://sections.geeks.solutions")
+
 module.exports = [
-    {
-        type: 'confirm',
-        name: 'addSectionsFiles',
-        message: 'Add vue-sections configuration with first sections page',
-        description: 'This will generate a ready to use sections page, vue-sections configuration files and add the required dependencies to your package.json',
-        default: false,
-    },
     {
         type: 'input',
         name: 'projectUrl',
@@ -19,5 +14,12 @@ module.exports = [
         message: 'What is your project ID:',
         validate: input => !!input,
         default: ''
+    },
+    {
+        type: 'confirm',
+        name: 'addSectionsFiles',
+        message: 'Add vue-sections configuration with first sections page',
+        description: 'This will generate a ready to use sections page, vue-sections configuration files and add the required dependencies to your package.json',
+        default: false,
     }
 ]

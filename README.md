@@ -13,9 +13,9 @@ A Vue js plugin to install and configure [@geeks-solutions/vue-sections](https:/
 The plugin will prompt you to answer three questions:
 
 ````
-? Add vue-sections configuration with first sections page Yes
 ? What is your project url: http://localhost:8000
 ? What is your project ID: 1d23few45rw213qd6
+? Add vue-sections configuration with first sections page Yes
 ````
 
 ### What does the plugin perform:
