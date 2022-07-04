@@ -19,7 +19,7 @@ module.exports = [
         type: 'confirm',
         name: 'addSectionsFiles',
         message: 'Add vue-sections configuration with first sections page',
-        description: 'This will generate a ready to use sections page, vue-sections configuration files and add the required dependencies to your package.json',
+        description: 'This will generate a ready to use sections page',
         default: false,
     }
 ]

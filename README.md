@@ -31,5 +31,6 @@ The plugin will prompt you to answer three questions:
 
  * Create file configuration for i18n required by the library under /lang/en.js
 
- * Create a configured first page with sections under /pages/Sections.vue
+ * Create a configured first page with sections under /pages/Sections.vue only if answered yes on the third question
+``? Add vue-sections configuration with first sections page Yes``
 
