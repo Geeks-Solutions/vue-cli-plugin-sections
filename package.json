@@ -1,5 +1,5 @@
 {
-  "name": "vue-cli-plugin-sections",
+  "name": "@geeks-solutions/vue-cli-plugin-sections",
   "version": "1.0.0",
   "description": "vue-cli plugin to add vue-sections",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/"
+    "url": "https://github.com/Geeks-Solutions/vue-cli-plugin-sections"
   },
   "keywords": [
     "vue",
@@ -18,7 +18,7 @@
     "vue-sections",
     "sections"
   ],
-  "author": "Hussein Mahfouz <h.mahfouz@eweev.com>",
+  "author": "Geeks Solutions info@geeks.solutions (https://www.geeks.solutions)",
   "engines": {
     "node": ">=10"
   }
