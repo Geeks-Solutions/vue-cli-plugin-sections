@@ -4,7 +4,7 @@ A Vue js plugin to install and configure [@geeks-solutions/vue-sections](https:/
 
 ### How to install vue-cli-plugin-sections plugin:
 
- - npm i @geeks-solutions/vue-cli-plugin-sections
+ - npm i @geeks.solutions/vue-cli-plugin-sections
 
 ### How to run the plugin:
 
