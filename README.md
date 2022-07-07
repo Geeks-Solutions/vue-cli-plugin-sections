@@ -8,7 +8,7 @@ A Vue js plugin to install and configure [@geeks-solutions/vue-sections](https:/
 
 ### How to run the plugin:
 
- - vue invoke vue-cli-plugin-sections
+ - vue invoke @geeks.solutions/vue-cli-plugin-sections
 
 The plugin will prompt you to answer three questions:
 
