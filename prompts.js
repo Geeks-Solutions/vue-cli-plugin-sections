@@ -21,5 +21,12 @@ module.exports = [
         message: 'Add vue-sections configuration with first sections page',
         description: 'This will generate a ready to use sections page',
         default: false,
+    },
+    {
+        type: 'confirm',
+        name: 'addReadyToUseSectionTypes',
+        message: 'Add 2 ready to use section types to your project',
+        description: 'This will generate 11 ready to use section types',
+        default: false,
     }
 ]

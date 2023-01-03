@@ -34,3 +34,6 @@ The plugin will prompt you to answer three questions:
  * Create a configured first page with sections under /pages/Sections.vue only if answered yes on the third question
 ``? Add vue-sections configuration with first sections page Yes``
 
+ * Add 2 fully customizable and ready to use section types only if answered yes on the fourth question
+``? Add 2 ready to use section types to your project Yes``
+

@@ -1,10 +1,11 @@
 <template>
   <div id="app">
     <Sections
-      :admin="admin"
-      :pageName="pageName"
-      :variations="[]"
-      @finishLoad="sectionsLoaded"
+        :admin="admin"
+        :page-name="pageName"
+        :lang="lang"
+        :variations="[]"
+        @finishLoad="sectionsLoaded"
     />
   </div>
 </template>
@@ -15,8 +16,13 @@ export default {
   data() {
     return {
       admin: false,
-      pageName: "home"
+      pageName: "Home"
     };
+  },
+  computed: {
+    lang() {
+      return this.$i18n.locale.toString()
+    }
   },
   methods: {
     sectionsLoaded() {

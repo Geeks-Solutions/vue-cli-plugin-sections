@@ -1,7 +1,7 @@
 module.exports = (api, options, rootOptions) => {
     api.extendPackage({
         dependencies: {
-            "@geeks-solutions/vue-sections": "^1.0.16",
+            "@geeks-solutions/vue-sections": "^1.0.18",
             "bootstrap-vue": "^2.21.2",
             "cookie-universal-nuxt": "^2.1.4",
             "nuxt-i18n": "^6.20.5"
@@ -12,6 +12,11 @@ module.exports = (api, options, rootOptions) => {
     })
     if (options.addSectionsFiles) {
         api.render('./template/vue-sections-first-page', {
+            ...options,
+        })
+    }
+    if (options.addReadyToUseSectionTypes) {
+        api.render('./template/ready-to-use-section-types', {
             ...options,
         })
     }
