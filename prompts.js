@@ -28,5 +28,21 @@ module.exports = [
         message: 'Add 2 ready to use section types to your project',
         description: 'This will generate 11 ready to use section types',
         default: false,
-    }
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'What is your email:',
+        when: answers => answers.addReadyToUseSectionTypes === true,
+        validate: input => !!input,
+        default: ''
+    },
+    {
+        type: 'input',
+        name: 'password',
+        message: 'What is your password:',
+        when: answers => answers.addReadyToUseSectionTypes === true,
+        validate: input => !!input,
+        default: ''
+    },
 ]
