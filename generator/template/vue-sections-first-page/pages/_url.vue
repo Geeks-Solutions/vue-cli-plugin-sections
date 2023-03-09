@@ -12,11 +12,11 @@
 
 <script>
 export default {
-  name: "App",
+  name: "dynamicSectionsPage",
   data() {
     return {
       admin: false,
-      pageName: "Home"
+      pageName: this.$route.params.url
     };
   },
   computed: {
