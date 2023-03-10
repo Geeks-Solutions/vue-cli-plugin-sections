@@ -1,6 +1,6 @@
 # vue-cli-plugin-sections
 
-A Vue js plugin to install and configure [@geeks-solutions/vue-sections](https://www.npmjs.com/package/@geeks-solutions/vue-sections) library.
+A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https://www.npmjs.com/package/@geeks.solutions/vue-sections) library.
 
 ### How to install vue-cli-plugin-sections plugin:
 
@@ -20,7 +20,7 @@ The plugin will prompt you to answer three questions:
 
 ### What does the plugin perform:
 
- * Add "@geeks-solutions/vue-sections" to you package.json + its required dependencies and install them:
+ * Add "@geeks.solutions/vue-sections" to you package.json + its required dependencies and install them:
     - "bootstrap-vue"
     - "cookie-universal-nuxt"
     - "nuxt-i18n"

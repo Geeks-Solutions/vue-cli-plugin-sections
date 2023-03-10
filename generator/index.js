@@ -3,10 +3,13 @@ const axios = require('axios');
 module.exports = (api, options, rootOptions) => {
     api.extendPackage({
         dependencies: {
-            "@geeks-solutions/vue-sections": "^1.0.18",
+            "@geeks.solutions/vue-sections": "^1.0.23",
             "bootstrap-vue": "^2.21.2",
             "cookie-universal-nuxt": "^2.1.4",
-            "nuxt-i18n": "^6.20.5"
+            "nuxt-i18n": "^6.20.5",
+            "vue-metamask": "^2.2.1",
+            "web3": "^1.7.3",
+            "js-sha256": "^0.9.0"
         }
     })
     api.render('./template/vue-sections', {
@@ -89,7 +92,7 @@ module.exports.hooks = (api, options) => {
                                     origin: 'https://sections-saas.k8s-dev.geeks.solutions'
                                 }
                             }).then(async (res) => {
-                                const sectionTypeNames = ['TermsPolicy', 'TextButtonRow']
+                                const sectionTypeNames = ['TermsPolicy', 'TextButtonRow', 'nftSection']
                             for (const typeName of sectionTypeNames) {
                                 await axios.post(`https://api.sections-saas.k8s-dev.geeks.solutions/api/v1/project/${options.projectId}/section-types/${typeName}`
                                     , {},
@@ -101,20 +104,14 @@ module.exports.hooks = (api, options) => {
                                             token: res.data.token
                                         }
                                     }).then((res) => {
-                                    console.log(res.data)
-
                                 }).catch((e) => {
-                                    console.log('\n'+e)
                                 })
                             }
                         }).catch((e) => {
-                            console.log('\n'+e)
                         })
                     }).catch((e) => {
-                        console.log('\n'+e)
                     })
                 }).catch((e) => {
-                    console.log('\n'+e.response.data.message)
                 })
             }
 
