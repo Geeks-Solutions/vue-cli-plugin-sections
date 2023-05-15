@@ -3,14 +3,13 @@
 
     <TranslationComponent @enSet="siteLang = 'en'" @frSet="siteLang = 'fr'" />
 
-    <div v-if="siteLang === 'en'" class="flex flex-col items-start justify-start mt-8">
+    <div class="flex flex-col items-start justify-start mt-8">
       <label class="mr-4 font-bold">{{ $t("Terms Policy") }}</label>
-      <wysiwyg :html="settings.en.termsPolicy" @settingsUpdate="updatePolicy"/>
+      <wysiwyg :html="settings[siteLang].termsPolicy" @settingsUpdate="siteLang === 'en' ? updatePolicy : updateFRPolicy"/>
+      <span v-show="errors.termsPolicy && siteLang === 'en'" class="text-error text-sm pt-2 pl-2">{{ $t('requiredField') }}</span>
     </div>
-    <div v-else-if="siteLang === 'fr'" class="flex flex-col items-start justify-start mt-8">
-      <label class="mr-4 font-bold">{{ $t("Terms Policy") }}</label>
-      <wysiwyg :html="settings.fr.termsPolicy" @settingsUpdate="updateFRPolicy"/>
-    </div>
+
+    <span v-show="!Object.values(errors).every((v) => v === false) && siteLang === 'fr'" id="required-fields" class="text-error text-sm pt-2 pl-2">{{ $t('checkRequiredField') }}</span>
 
   </div>
 </template>
@@ -69,6 +68,7 @@ export default {
         valid = false;
       }
       if (!valid) {
+        setTimeout(() => document.getElementById('required-fields').scrollIntoView(), 1000)
         this.$root.$emit("toast", {
           type: "Error",
           message: this.$t("fill-required-fields")

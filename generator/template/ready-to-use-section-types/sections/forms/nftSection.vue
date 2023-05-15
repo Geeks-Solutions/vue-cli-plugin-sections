@@ -10,23 +10,23 @@
 
           <div class="mb-4 flex items-center">
             <label class="input-label">{{ $t("Title") }}</label>
-            <input v-model="settings.title" :class="errors.title ? errorInputClass : inputClass" type="text" :placeholder="$t('Title')">
+            <input v-model="settings[0].title" :class="errors.title ? errorInputClass : inputClass" type="text" :placeholder="$t('Title')">
           </div>
 
           <div class="mb-4 flex items-center">
             <label class="input-label">{{ $t("contractAddr") }}</label>
-            <input v-model="settings.contract_addr" :class="errors.contractAddr ? errorInputClass : inputClass" type="text" :placeholder="$t('contractAddr')">
+            <input v-model="settings[0].contract_addr" :class="errors.contractAddr ? errorInputClass : inputClass" type="text" :placeholder="$t('contractAddr')">
           </div>
 
           <div class="flex flex-row justify-center mb-4">
             <div class="input-label pr-2">{{ $t("contractABI") }}</div>
-            <textarea v-model="settings.contract_abi" :class="errors.contractABI ? errorInputAreaClass : inputAreaClass" type="text" :placeholder="$t('contractABI')"/>
+            <textarea v-model="settings[0].contract_abi" :class="errors.contractABI ? errorInputAreaClass : inputAreaClass" type="text" :placeholder="$t('contractABI')"/>
           </div>
 
           <div class="mb-4 flex items-center">
             <label class="input-label">{{ $t("Token ID*") }}</label>
             <span class="text-sm py-1 text-grayText">{{ $t('The token ID must match the token id in your smart contract') }}</span>
-            <input v-model="settings.token_id" :class="errors.token_id ? errorInputClass : inputClass" type="text" :placeholder="$t('Token ID*')">
+            <input v-model="settings[0].token_id" :class="errors.token_id ? errorInputClass : inputClass" type="text" :placeholder="$t('Token ID*')">
           </div>
 
         </fieldset>
@@ -59,13 +59,13 @@
                     "
                   >
                     <div class="w-95px h-63px">
-                      <EmptyImage v-if="settings.image.files[0].url === '' && !isInProgress"
+                      <EmptyImage v-if="settings[0].image.length === 0 || (settings[0].image.length > 0 && settings[0].image[0].url === '') && !isInProgress"
                                   alt="empty"
                                   class="w-95px h-63px object-contain"/>
-                      <div v-if="settings.image.files && !isInProgress">
+                      <div v-if="settings[0].image.length > 0 && settings[0].image[0].url !== ''">
                         <img
-                          v-if="settings.image.files[0].url"
-                          :src="settings.image.files[0].url"
+                          v-if="settings[0].image.length > 0 && settings[0].image[0].url !== ''"
+                          :src="settings[0].image[0].url"
                           alt="image"
                           class="w-95px h-63px object-contain"
                         />
@@ -79,7 +79,7 @@
                       </div>
                     </div>
                     <div>
-                      <span v-if="!settings.image.files[0].url" class="text-sm text-TextGray">{{ uploadText }}</span>
+                      <span v-if="settings[0].image.length === 0 || (settings[0].image.length > 0 && settings[0].image[0].url === '')" class="text-sm text-TextGray">{{ uploadText }}</span>
                       <span v-else class="text-sm text-TextGray">{{ changeText }}</span>
                     </div>
                   </div>
@@ -92,7 +92,7 @@
                   @change="onFileSelected"
                 />
                 <div @click="removeImage">
-                  <Cross v-if="settings.image.files[0].url !== ''" alt="" class="cursor-pointer pl-2"/>
+                  <Cross v-if="settings[0].image.length > 0 && settings[0].image[0].url !== ''" alt="" class="cursor-pointer pl-2"/>
                 </div>
               </div>
             </div>
@@ -100,9 +100,9 @@
 
           <span class="flex text-error py-2 text-xs">{{ mediaError }}</span>
 
-          <div v-show="settings.image.files" class="flex flex-row mb-4">
+          <div v-show="settings[0].image.length > 0 && settings[0].image[0].url !== ''" class="flex flex-row mb-4">
             <div class="input-label pr-2">{{ $t("imageDesc") }}</div>
-            <wysiwyg :html="settings.image_description" @settingsUpdate="updateDescription"/>
+            <wysiwyg :html="settings[0].image_description" @settingsUpdate="updateDescription"/>
           </div>
         </fieldset>
       </div>
@@ -113,7 +113,7 @@
 
 </template>
 <script>
-import {deleteMedia, globalFileUpload} from "@geeks.solutions/vue-sections";
+import {deleteMedia, globalFileUpload} from "@geeks.solutions/nuxt-sections/lib/src/utils";
 
 import EmptyImage from "../base/icons/emptyImage";
 import Cross from "../base/icons/cross";
@@ -152,26 +152,29 @@ export default {
   },
   data() {
     return {
-      settings: {
-        title: '',
-        contract_addr: '',
-        contract_abi: '',
-        image: {
-          id: "",
-          files: [
+      settings: [
+        {
+          title: '',
+          contract_addr: '',
+          contract_abi: '',
+          image: [
             {
-              filename: "",
-              url: ""
+              media_id: "",
+              url: "",
+              files: [
+                {
+                  filename: "",
+                }
+              ]
             }
-          ]
-        },
-        image_description: '',
-        token_id: ""
-      },
-      inputClass: 'sections-input p-2 font-sm ml-4 appearance-none block bg-gray-200 text-gray-700 border border-gray-200 rounded-full px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
+          ],
+          image_description: '',
+          token_id: ""
+        }
+      ],
+      inputClass: 'sections-input py-4 pl-6 border border-FieldGray rounded-xl h-48px w-344px focus:outline-none',
       errorInputClass: 'sections-input p-2 font-sm ml-4 appearance-none block bg-gray-200 text-gray-700 border border-error rounded-full px-4 leading-tight focus:outline-none focus:bg-white focus:border-error',
-      inputClass2: 'sections-input p-2 font-sm ml-1 appearance-none block bg-gray-200 text-gray-700 border border-gray-200 rounded-full px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
-      inputAreaClass: 'sections-input p-8 appearance-none block bg-gray-200 text-gray-700 border border-gray-200 rounded px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500',
+      inputAreaClass: 'sections-input p-8 py-4 pl-6 border border-FieldGray rounded-xl h-48px w-344px focus:outline-none',
       errorInputAreaClass: 'sections-input p-8 appearance-none block bg-gray-200 text-gray-700 border border-error rounded px-4 leading-tight focus:outline-none focus:bg-white focus:border-error',
       previewImage: '',
       file: '',
@@ -199,23 +202,24 @@ export default {
       this.file = this.$refs.imagePick.files[0]
 
       const image = {
-        id: "",
+        media_id: "",
+        url: "",
         files: [
           {
             filename: "",
-            url: ""
           }
         ]
       };
       this.mediaError = ''
-      await globalFileUpload(this.file, this.settings.image.id).then(
+      await globalFileUpload(this.file, this.settings[0].image.id).then(
         (result) => {
           if(result.success) {
             this.isInProgress = false
-            image.files[0].url = result.data.files[0].url;
             image.files[0].filename = result.data.files[0].filename;
-            image.id = result.data.id;
-            this.settings.image = image;
+            image.media_id = result.data.id;
+            image.url = result.data.files[0].url;
+            this.settings[0].image = [];
+            this.settings[0].image.push(image);
             this.previewImage = result.data.files[0].url
           } else {
             this.isInProgress = false
@@ -228,29 +232,25 @@ export default {
       this.mobileHide = !this.mobileHide
     },
     async removeImage() {
-      if(this.settings.image.id) {
-        await deleteMedia(this.settings.image.id)
-      }
-      this.settings.image.files[0].url = ''
-      this.settings.image.id = null
+      this.settings[0].image = []
       this.previewImage = ''
       this.file = ''
     },
     validate() {
       let valid = true;
-      if (!this.settings.title) {
+      if (!this.settings[0].title) {
         this.errors.title = true;
         valid = false;
       }
-      if (!this.settings.contract_addr) {
+      if (!this.settings[0].contract_addr) {
         this.errors.contractAddr = true;
         valid = false;
       }
-      if (!this.settings.contract_abi) {
+      if (!this.settings[0].contract_abi) {
         this.errors.contractABI = true;
         valid = false;
       }
-      if (!this.settings.token_id) {
+      if (!this.settings[0].token_id) {
         this.errors.token_id = true;
         valid = false;
       }
@@ -263,7 +263,7 @@ export default {
       return valid;
     },
     updateDescription(content) {
-      this.settings.image_description = content
+      this.settings[0].image_description = content
     }
   }
 };

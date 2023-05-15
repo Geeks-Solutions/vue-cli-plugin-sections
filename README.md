@@ -1,6 +1,6 @@
 # vue-cli-plugin-sections
 
-A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https://www.npmjs.com/package/@geeks.solutions/vue-sections) library.
+A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https://www.npmjs.com/package/@geeks.solutions/vue-sections) OR [@geeks.solutions/nuxt-sections](https://www.npmjs.com/package/@geeks.solutions/nuxt-sections) library.
 
 ### How to install vue-cli-plugin-sections plugin:
 
@@ -13,12 +13,14 @@ A Vue js plugin to install and configure [@geeks.solutions/vue-sections](https:/
 The plugin will prompt you to answer three questions:
 
 ````
+? What version of sections would you like to install on your project:: Nuxt js
 ? What is your project url: http://localhost:8000
 ? What is your project ID: 1d23few45rw213qd6
-? Add vue-sections configuration with first sections page Yes
 ````
 
 ### What does the plugin perform:
+
+#### If Vue js is selected from the first question:
 
  * Add "@geeks.solutions/vue-sections" to you package.json + its required dependencies and install them:
     - "bootstrap-vue"
@@ -31,9 +33,24 @@ The plugin will prompt you to answer three questions:
 
  * Create file configuration for i18n required by the library under /lang/en.js
 
- * Create a configured first page with sections under /pages/Sections.vue only if answered yes on the third question
+ * Create a configured first page with sections under /pages/url.vue only if answered yes on the third question
 ``? Add vue-sections configuration with first sections page Yes``
 
- * Add 2 fully customizable and ready to use section types only if answered yes on the fourth question
-``? Add 2 ready to use section types to your project Yes``
+ * Add 3 fully customizable and ready to use section types only if answered yes on the fourth question
+``? Add 3 ready to use section types to your project Yes``
+
+
+#### If Nuxt js is selected from the first question:
+
+ * Add "@geeks.solutions/nuxt-sections" to you package.json + its required dependencies and install them:
+    - "cookie-universal-nuxt"
+
+ * Update nuxt.config.js with modules and publicRuntimeConfig required by nuxt-sections.
+ 
+ * Create file configuration for i18n required by the library under /lang/en.js /lang/fr.js
+
+ * Create a configured first page with sections under /pages/_url.vue
+
+ * Add 3 fully customizable and ready to use section types + the required Tailwind configurations for them only if answered yes on the fourth question
+``? Add 3 ready to use section types to your project Yes``
 

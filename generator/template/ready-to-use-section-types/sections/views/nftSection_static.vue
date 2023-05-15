@@ -93,10 +93,10 @@
 
     </div>
 
-    <div v-if="section.settings.image && section.settings.image.files && section.settings.image.files[0].url !== '' || (section.settings.image_description && section.settings.image_description !== '')" class="imageStyle">
-      <img v-if="section.settings.image && section.settings.image.files" :src="section.settings.image.files[0].url" />
-      <div class="descStyle ql-editor ql-snow" v-html="section.settings.image_description" />
-<!--      <p class="descStyle">{{ section.settings.imageDesc }}</p>-->
+    <div v-if="section.settings[0].image[0] && section.settings[0].image[0].url !== '' || (section.settings[0].image_description && section.settings[0].image_description !== '')" class="imageStyle">
+      <img v-if="section.settings[0].image[0] && section.settings[0].image[0].url !== ''" :src="section.settings[0].image[0].url" />
+      <div class="descStyle ql-editor ql-snow" v-html="section.settings[0].image_description" />
+<!--      <p class="descStyle">{{ section.settings[0].imageDesc }}</p>-->
     </div>
   </div>
 </template>
@@ -153,7 +153,7 @@ export default {
       return !!this.section.settings;
     },
     title() {
-      return this.section.settings.title;
+      return this.section.settings[0].title;
     },
     total() {
       return Number(this.price)
@@ -162,26 +162,26 @@ export default {
       return this.payPrice ? (this.total + Number(this.payPrice) * Math.pow(10, 18)) : this.total
     },
     contractAddr() {
-      return this.section.settings.contract_addr
+      return this.section.settings[0].contract_addr
     },
     contractABI() {
-      return this.section.settings.contract_abi
+      return this.section.settings[0].contract_abi
     },
     maxPerTxFunctionName() {
-      return this.section.settings.maxPerTx
+      return this.section.settings[0].maxPerTx
     },
     priceFunctionName() {
       return ""
     },
     freePerAddressFunctionName() {
-      return this.section.settings.freePerAddress
+      return this.section.settings[0].freePerAddress
     },
     tokenType() {
       return "Erc1155"
     },
     whitelistId() {
-      if(this.section.settings && this.section.settings.whitelist_id) {
-        return this.section.settings.whitelist_id
+      if(this.section.settings && this.section.settings[0].whitelist_id) {
+        return this.section.settings[0].whitelist_id
       } else return null
     }
   },
@@ -244,7 +244,7 @@ export default {
           };
           if(this.tokenType === 'Erc1155') {
             nftContract.once("TransferSingle", options, () => { this.$refs.metamaskStatic.Log() })
-            nftContract.methods.initFront(this.web3.coinbase, this.section.settings.token_id).call().then((res) => {
+            nftContract.methods.initFront(this.web3.coinbase, this.section.settings[0].token_id).call().then((res) => {
               this.totalSupply = parseInt(res.total_supply)
               this.isContractPaused = res.isPaused
               this.mintsCount = parseInt(res.mints_count)
@@ -263,7 +263,7 @@ export default {
         const contractAddress = this.contractAddr
         const nftContract = new this.$refs.metamaskStatic.web3.eth.Contract(JSON.parse(this.contractABI), contractAddress)
         if(this.tokenType === 'Erc1155') {
-          nftContract.methods.getMintTotalPrice(this.web3.coinbase, this.section.settings.token_id, this.amount).call().then((res) => {
+          nftContract.methods.getMintTotalPrice(this.web3.coinbase, this.section.settings[0].token_id, this.amount).call().then((res) => {
             this.price = res
           })
         }
@@ -283,8 +283,13 @@ export default {
         this.processing = false
       } else if(this.amount > (this.maxSupply - this.totalSupply)) {
         this.errorMessage = `Only ${this.maxSupply - this.totalSupply} tokens left to mint`
+        this.processing = false
       } else if (parseInt(this.mintsCount)+this.amount > parseInt(this.maxBuyPerAddress)) {
         this.errorMessage = `You are allowed to mint ${this.maxBuyPerAddress - this.mintsCount} tokens with this wallet`
+        this.processing = false
+      } else if ((parseFloat(this.web3.balance) / Math.pow(10, 18)) <= (this.totalOverall / Math.pow(10, 18))) {
+        this.errorMessage = `You do not have sufficient ETH in your wallet to proceed`
+        this.processing = false
       } else {
         this.loading = true
         this.errorMessage = ''
@@ -295,7 +300,7 @@ export default {
           'to': contractAddress,
           nonce,
           'value': this.totalOverall, // There are 10^18 wei in a single Ether
-          'data': nftContract.methods.mint(this.section.settings.token_id, this.amount).encodeABI()
+          'data': nftContract.methods.mint(this.section.settings[0].token_id, this.amount).encodeABI()
         }
 
         this.$refs.metamaskStatic.web3.eth.sendTransaction(tx)
@@ -322,9 +327,9 @@ export default {
       if(!parameters.secondaryContractId) {
         contractAddress = this.contractAddr
         nftContract = new this.$refs.metamaskStatic.web3.eth.Contract(JSON.parse(this.contractABI), contractAddress)
-      } else if(this.section.settings.secondary_contracts[parameters.secondaryContractId]) {
-          contractAddress = this.section.settings.secondary_contracts[parameters.secondaryContractId].contract_address
-          nftContract = new this.$refs.metamaskStatic.web3.eth.Contract(JSON.parse(this.section.settings.secondary_contracts[parameters.secondaryContractId].contract_abi), contractAddress)
+      } else if(this.section.settings[0].secondary_contracts[parameters.secondaryContractId]) {
+          contractAddress = this.section.settings[0].secondary_contracts[parameters.secondaryContractId].contract_address
+          nftContract = new this.$refs.metamaskStatic.web3.eth.Contract(JSON.parse(this.section.settings[0].secondary_contracts[parameters.secondaryContractId].contract_abi), contractAddress)
         } else {
         // eslint-disable-next-line no-console
           console.error("Contract ID not found")
@@ -378,7 +383,7 @@ export default {
       // const URL = this.$config.NUXT_ENV_WHITELIST_SERVER
       return await this.$axios.get(
         // URL,
-        `/proof/${this.section.settings.whitelist_id}/${this.web3.coinbase}`,
+        `/proof/${this.section.settings[0].whitelist_id}/${this.web3.coinbase}`,
         {}
       ).catch((error) => {
         return error
