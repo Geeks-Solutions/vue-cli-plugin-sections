@@ -96,7 +96,6 @@
     <div v-if="section.settings[0].image[0] && section.settings[0].image[0].url !== '' || (section.settings[0].image_description && section.settings[0].image_description !== '')" class="imageStyle">
       <img v-if="section.settings[0].image[0] && section.settings[0].image[0].url !== ''" :src="section.settings[0].image[0].url" />
       <div class="descStyle ql-editor ql-snow" v-html="section.settings[0].image_description" />
-<!--      <p class="descStyle">{{ section.settings[0].imageDesc }}</p>-->
     </div>
   </div>
 </template>

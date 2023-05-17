@@ -3,7 +3,7 @@ const {sha256} = require("js-sha256");
 const app = require('express')()
 
 app.use(bodyParser.json())
-app.all('/getJSON', (req, res) => {
+app.all('/getWLHash', (req, res) => {
 
   const hash = sha256.hmac(process.env.WHITELIST_HASH_PRIVATE_KEY, req.body.dataString)
   const finalHash = req.body.timestamp.concat('=').concat(hash)

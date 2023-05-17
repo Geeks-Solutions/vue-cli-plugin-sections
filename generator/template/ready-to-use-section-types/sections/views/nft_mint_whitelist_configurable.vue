@@ -93,10 +93,10 @@
 
     </div>
 
-    <div v-if="section.settings.image && section.settings.image.files && section.settings.image.files[0].url !== '' || (section.settings.image_description && section.settings.image_description !== '')" class="imageStyle">
+    <div v-if="(section.settings.image && section.settings.image.files && section.settings.image.files[0].url !== '') || (section.settings.image && section.settings.image.length > 0 && section.settings.image[0] && section.settings.image[0].url !== '') || (section.settings.image_description && section.settings.image_description !== '')" class="imageStyle">
       <img v-if="section.settings.image && section.settings.image.files" :src="section.settings.image.files[0].url" />
+      <img v-else-if="section.settings.image && section.settings.image.length > 0 && section.settings.image[0]" :src="section.settings.image[0].url" />
       <div class="descStyle ql-editor ql-snow" v-html="section.settings.image_description" />
-<!--      <p class="descStyle">{{ section.settings.imageDesc }}</p>-->
     </div>
   </div>
 </template>
@@ -288,8 +288,13 @@ export default {
         this.processing = false
       } else if(this.amount > (this.maxSupply - this.totalSupply)) {
         this.errorMessage = `Only ${this.maxSupply - this.totalSupply} tokens left to mint`
+        this.processing = false
       } else if (parseInt(this.mintsCount)+this.amount > parseInt(this.maxBuyPerAddress)) {
         this.errorMessage = `You are allowed to mint ${this.maxBuyPerAddress - this.mintsCount} tokens with this wallet`
+        this.processing = false
+      } else if ((parseFloat(this.web3.balance) / Math.pow(10, 18)) <= (this.totalOverall / Math.pow(10, 18))) {
+        this.errorMessage = `You do not have sufficient ETH in your wallet to proceed`
+        this.processing = false
       } else if(this.isWhitelist) {
         this.getProof().then((response) => {
           if(response.data.proof) {

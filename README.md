@@ -39,6 +39,8 @@ The plugin will prompt you to answer three questions:
  * Add 3 fully customizable and ready to use section types only if answered yes on the fourth question
 ``? Add 3 ready to use section types to your project Yes``
 
+ * If you answered yes for adding 3 ready to use section types, you should find all declarations of `@geeks.solutions/nuxt-sections/lib/src/utils` (`wysiwyg.vue` under `sections/base/components/` and `nftSection.vue` under `sections/forms/`) and replace them by `@geeks.solutions/vue-sections` for the sections to work correctly
+
 
 #### If Nuxt js is selected from the first question:
 

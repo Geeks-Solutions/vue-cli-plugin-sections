@@ -178,7 +178,7 @@ export default {
         const currentDate = new Date()
         const timestamp = Math.floor(currentDate.getTime()/1000)
         let finalHash
-        this.$axios.post(`${this.$config.NUXT_ENV_SECTIONS_PROJECT_URL}/server-middleware/getJSON`, {
+        this.$axios.post(`${this.$config.NUXT_ENV_SECTIONS_PROJECT_URL}/server-middleware/getWLHash`, {
           app_id: this.$config.NUXT_ENV_SECTIONS_PROJECT_ID,
           timestamp: timestamp.toString(),
           dataString: `${timestamp.toString()}${whitelistIdString}${this.whitelistSettings.index}${this.whitelistSettings.token_id}`
