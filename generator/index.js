@@ -145,7 +145,7 @@ module.exports.hooks = (api, options) => {
         api.onCreateComplete(async () => {
 
             const sectionsServerUrl = 'https://sections.geeks.solutions'
-            const sectionTypeNames = ['TermsPolicy', 'TextButtonRow', 'nftSection']
+            const sectionTypeNames = ['TermsPolicy', 'TextButtonRow', 'nftSection', 'WysiwygUrl']
 
             if(options.addReadyToUseSectionTypes) {
                 await axios.post(`${sectionsServerUrl}/api/v1/login`,
